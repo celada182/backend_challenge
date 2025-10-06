@@ -43,6 +43,7 @@ public class TaskController {
     @PutMapping("/{taskId}")
     public ProjectGenerationTask updateTask(@PathVariable String taskId,
                                             @RequestBody @Valid ProjectGenerationTask projectGenerationTask) {
+        // TODO Avoid null fields
         return taskService.update(taskId, projectGenerationTask);
     }
 

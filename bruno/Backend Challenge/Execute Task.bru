@@ -1,0 +1,30 @@
+meta {
+  name: Execute Task
+  type: http
+  seq: 7
+}
+
+post {
+  url: http://localhost:8080/api/tasks/:id/execute
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: 253dad2b-3bdd-43af-b908-8b47de17d78a
+}
+
+headers {
+  Celonis-Auth: totally_secret
+}
+
+body:json {
+  {
+    "name": "Test task",
+    "creationDate": "2025-10-06"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

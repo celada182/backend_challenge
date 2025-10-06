@@ -1,0 +1,310 @@
+{
+  "name": "Backend Challenge",
+  "version": "1",
+  "items": [
+    {
+      "type": "http",
+      "name": "List Tasks",
+      "filename": "List Tasks.bru",
+      "seq": 1,
+      "settings": {
+        "encodeUrl": true
+      },
+      "tags": [],
+      "request": {
+        "url": "http://localhost:8080/api/tasks/",
+        "method": "GET",
+        "headers": [
+          {
+            "name": "Celonis-Auth",
+            "value": "totally_secret",
+            "enabled": true
+          }
+        ],
+        "params": [],
+        "body": {
+          "mode": "none",
+          "formUrlEncoded": [],
+          "multipartForm": [],
+          "file": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "docs": "",
+        "auth": {
+          "mode": "inherit"
+        }
+      }
+    },
+    {
+      "type": "http",
+      "name": "Create Task",
+      "filename": "Create Task.bru",
+      "seq": 3,
+      "settings": {
+        "encodeUrl": true
+      },
+      "tags": [],
+      "request": {
+        "url": "http://localhost:8080/api/tasks/",
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Celonis-Auth",
+            "value": "totally_secret",
+            "enabled": true
+          }
+        ],
+        "params": [],
+        "body": {
+          "mode": "json",
+          "json": "{\n  \"name\": \"Test task\",\n  \"creationDate\": \"2025-10-06\"\n}",
+          "formUrlEncoded": [],
+          "multipartForm": [],
+          "file": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "docs": "",
+        "auth": {
+          "mode": "inherit"
+        }
+      }
+    },
+    {
+      "type": "http",
+      "name": "Get Task",
+      "filename": "Get Task.bru",
+      "seq": 4,
+      "settings": {
+        "encodeUrl": true
+      },
+      "tags": [],
+      "request": {
+        "url": "http://localhost:8080/api/tasks/:id",
+        "method": "GET",
+        "headers": [
+          {
+            "name": "Celonis-Auth",
+            "value": "totally_secret",
+            "enabled": true
+          }
+        ],
+        "params": [
+          {
+            "name": "id",
+            "value": "253dad2b-3bdd-43af-b908-8b47de17d78a",
+            "type": "path",
+            "enabled": true
+          }
+        ],
+        "body": {
+          "mode": "none",
+          "formUrlEncoded": [],
+          "multipartForm": [],
+          "file": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "docs": "",
+        "auth": {
+          "mode": "inherit"
+        }
+      }
+    },
+    {
+      "type": "http",
+      "name": "Update Task",
+      "filename": "Update Task.bru",
+      "seq": 5,
+      "settings": {
+        "encodeUrl": true
+      },
+      "tags": [],
+      "request": {
+        "url": "http://localhost:8080/api/tasks/:id",
+        "method": "PUT",
+        "headers": [
+          {
+            "name": "Celonis-Auth",
+            "value": "totally_secret",
+            "enabled": true
+          }
+        ],
+        "params": [
+          {
+            "name": "id",
+            "value": "974bee1b-f5c9-41f2-9a3e-3278abae07b8",
+            "type": "path",
+            "enabled": true
+          }
+        ],
+        "body": {
+          "mode": "json",
+          "json": "{\n  \"name\": \"Updated name\"\n}",
+          "formUrlEncoded": [],
+          "multipartForm": [],
+          "file": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "docs": "",
+        "auth": {
+          "mode": "inherit"
+        }
+      }
+    },
+    {
+      "type": "http",
+      "name": "Delete Task",
+      "filename": "Delete Task.bru",
+      "seq": 6,
+      "settings": {
+        "encodeUrl": true
+      },
+      "tags": [],
+      "request": {
+        "url": "http://localhost:8080/api/tasks/:id",
+        "method": "DELETE",
+        "headers": [
+          {
+            "name": "Celonis-Auth",
+            "value": "totally_secret",
+            "enabled": true
+          }
+        ],
+        "params": [
+          {
+            "name": "id",
+            "value": "974bee1b-f5c9-41f2-9a3e-3278abae07b8",
+            "type": "path",
+            "enabled": true
+          }
+        ],
+        "body": {
+          "mode": "json",
+          "json": "{\n  \"name\": \"Updated name\"\n}",
+          "formUrlEncoded": [],
+          "multipartForm": [],
+          "file": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "docs": "",
+        "auth": {
+          "mode": "inherit"
+        }
+      }
+    },
+    {
+      "type": "http",
+      "name": "Execute Task",
+      "filename": "Execute Task.bru",
+      "seq": 7,
+      "settings": {
+        "encodeUrl": true
+      },
+      "tags": [],
+      "request": {
+        "url": "http://localhost:8080/api/tasks/:id/execute",
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Celonis-Auth",
+            "value": "totally_secret",
+            "enabled": true
+          }
+        ],
+        "params": [
+          {
+            "name": "id",
+            "value": "253dad2b-3bdd-43af-b908-8b47de17d78a",
+            "type": "path",
+            "enabled": true
+          }
+        ],
+        "body": {
+          "mode": "json",
+          "json": "{\n  \"name\": \"Test task\",\n  \"creationDate\": \"2025-10-06\"\n}",
+          "formUrlEncoded": [],
+          "multipartForm": [],
+          "file": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "docs": "",
+        "auth": {
+          "mode": "inherit"
+        }
+      }
+    },
+    {
+      "type": "http",
+      "name": "Get Task Result",
+      "filename": "Get Task Result.bru",
+      "seq": 8,
+      "settings": {
+        "encodeUrl": true
+      },
+      "tags": [],
+      "request": {
+        "url": "http://localhost:8080/api/tasks/:id/result",
+        "method": "GET",
+        "headers": [
+          {
+            "name": "Celonis-Auth",
+            "value": "totally_secret",
+            "enabled": true
+          }
+        ],
+        "params": [
+          {
+            "name": "id",
+            "value": "253dad2b-3bdd-43af-b908-8b47de17d78a",
+            "type": "path",
+            "enabled": true
+          }
+        ],
+        "body": {
+          "mode": "json",
+          "json": "{\n  \"name\": \"Test task\",\n  \"creationDate\": \"2025-10-06\"\n}",
+          "formUrlEncoded": [],
+          "multipartForm": [],
+          "file": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "docs": "",
+        "auth": {
+          "mode": "inherit"
+        }
+      }
+    }
+  ],
+  "environments": [],
+  "brunoConfig": {
+    "version": "1",
+    "name": "Backend Challenge",
+    "type": "collection",
+    "ignore": [
+      "node_modules",
+      ".git"
+    ],
+    "size": 0,
+    "filesCount": 0
+  }
+}

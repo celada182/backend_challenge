@@ -50,6 +50,7 @@ public class TaskService {
     }
 
     public void executeTask(String taskId) {
+        // TODO automatically create zip file and resource folder
         URL url = Thread.currentThread().getContextClassLoader().getResource("challenge.zip");
         ProjectGenerationTask task = getTask(taskId);
         if (url == null) {

@@ -1,0 +1,29 @@
+meta {
+  name: Update Task
+  type: http
+  seq: 5
+}
+
+put {
+  url: http://localhost:8080/api/tasks/:id
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: 974bee1b-f5c9-41f2-9a3e-3278abae07b8
+}
+
+headers {
+  Celonis-Auth: totally_secret
+}
+
+body:json {
+  {
+    "name": "Updated name"
+  }
+}
+
+settings {
+  encodeUrl: true
+}
