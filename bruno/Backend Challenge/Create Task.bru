@@ -1,0 +1,26 @@
+meta {
+  name: Create Task
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:8080/api/tasks/
+  body: json
+  auth: inherit
+}
+
+headers {
+  Celonis-Auth: totally_secret
+}
+
+body:json {
+  {
+    "name": "Test task",
+    "creationDate": "2025-10-06"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

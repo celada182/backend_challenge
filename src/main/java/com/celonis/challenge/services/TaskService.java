@@ -51,11 +51,12 @@ public class TaskService {
 
     public void executeTask(String taskId) {
         URL url = Thread.currentThread().getContextClassLoader().getResource("challenge.zip");
+        ProjectGenerationTask task = getTask(taskId);
         if (url == null) {
             throw new InternalException("Zip file not found");
         }
         try {
-            fileService.storeResult(taskId, url);
+            fileService.storeResult(task, url);
         } catch (Exception e) {
             throw new InternalException(e);
         }

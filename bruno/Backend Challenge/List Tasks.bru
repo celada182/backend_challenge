@@ -1,0 +1,19 @@
+meta {
+  name: List Tasks
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:8080/api/tasks/
+  body: none
+  auth: inherit
+}
+
+headers {
+  Celonis-Auth: totally_secret
+}
+
+settings {
+  encodeUrl: true
+}

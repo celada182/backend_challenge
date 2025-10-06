@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Backend Challenge",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

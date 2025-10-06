@@ -9,27 +9,22 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.net.URL;
 
-@Component
+@Service
 public class FileService {
-
-    private final TaskService taskService;
 
     private final ProjectGenerationTaskRepository projectGenerationTaskRepository;
 
-    public FileService(TaskService taskService,
-                       ProjectGenerationTaskRepository projectGenerationTaskRepository) {
-        this.taskService = taskService;
+    public FileService(ProjectGenerationTaskRepository projectGenerationTaskRepository) {
         this.projectGenerationTaskRepository = projectGenerationTaskRepository;
     }
 
-    public ResponseEntity<FileSystemResource> getTaskResult(String taskId) {
-        ProjectGenerationTask projectGenerationTask = taskService.getTask(taskId);
-        File inputFile = new File(projectGenerationTask.getStorageLocation());
+    public ResponseEntity<FileSystemResource> getTaskResult(ProjectGenerationTask task) {
+        File inputFile = new File(task.getStorageLocation());
 
         if (!inputFile.exists()) {
             throw new InternalException("File not generated yet");
@@ -42,12 +37,11 @@ public class FileService {
         return new ResponseEntity<>(new FileSystemResource(inputFile), respHeaders, HttpStatus.OK);
     }
 
-    public void storeResult(String taskId, URL url) throws IOException {
-        ProjectGenerationTask projectGenerationTask = taskService.getTask(taskId);
-        File outputFile = File.createTempFile(taskId, ".zip");
+    public void storeResult(ProjectGenerationTask task, URL url) throws IOException {
+        File outputFile = File.createTempFile(task.getId(), ".zip");
         outputFile.deleteOnExit();
-        projectGenerationTask.setStorageLocation(outputFile.getAbsolutePath());
-        projectGenerationTaskRepository.save(projectGenerationTask);
+        task.setStorageLocation(outputFile.getAbsolutePath());
+        projectGenerationTaskRepository.save(task);
         try (InputStream is = url.openStream();
              OutputStream os = new FileOutputStream(outputFile)) {
             IOUtils.copy(is, os);
