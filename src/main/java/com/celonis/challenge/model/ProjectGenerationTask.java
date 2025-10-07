@@ -16,9 +16,9 @@ public class ProjectGenerationTask {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-    private String name;
-
     private Date creationDate;
+
+    private String name;
 
     @JsonIgnore
     private String storageLocation;

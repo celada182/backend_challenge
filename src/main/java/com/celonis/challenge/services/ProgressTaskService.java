@@ -4,11 +4,17 @@ import com.celonis.challenge.exceptions.NotFoundException;
 import com.celonis.challenge.model.ProgressTask;
 import com.celonis.challenge.repository.ProgressTaskRepository;
 import com.celonis.challenge.scheduler.ProgressTaskScheduler;
+import org.apache.tomcat.jni.Local;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -28,6 +34,11 @@ public class ProgressTaskService {
 
     public ProgressTask createTask(ProgressTask progressTask) {
         progressTask.setId(null);
+        progressTask.setCreationDate(new Date());
+        // Testing clean up
+//        LocalDate localDate = LocalDate.now().minusWeeks(1).minusDays(1);
+//        Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+//        progressTask.setCreationDate(date);
         progressTask.setProgress(progressTask.getStart());
         progressTask.setCompleted(false);
         return progressTaskRepository.save(progressTask);
@@ -71,5 +82,19 @@ public class ProgressTaskService {
                 logger.info("Task {} cancelled", task.getId());
             }
         };
+    }
+
+    @Scheduled(cron = "0 0 * * * ?") // Every day at 00:00
+    private void cleanupTasks() {
+        logger.info("Cleaning up progress tasks");
+        LocalDate localDate = LocalDate.now().minusWeeks(1); // One week old
+        Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        progressTaskRepository.findAll().forEach(task -> {
+            if (task.getCreationDate().compareTo(date) < 0) {
+                logger.info("Task {} is older than one week", task.getId());
+                progressTaskScheduler.cancelScheduledTask(task.getId());
+                progressTaskRepository.delete(task);
+            }
+        });
     }
 }

@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Entity
 public class ProgressTask {
@@ -13,6 +14,8 @@ public class ProgressTask {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
+
+    private Date creationDate;
 
     private Integer start;
 
@@ -24,6 +27,10 @@ public class ProgressTask {
 
     public String getId() {
         return id;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
     }
 
     public Integer getEnd() {
@@ -48,6 +55,10 @@ public class ProgressTask {
 
     public void setStart(Integer start) {
         this.start = start;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
     public void setEnd(Integer end) {
