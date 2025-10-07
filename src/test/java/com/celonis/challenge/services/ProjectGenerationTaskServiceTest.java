@@ -1,13 +1,11 @@
 package com.celonis.challenge.services;
 
 import com.celonis.challenge.model.ProjectGenerationTask;
-import com.celonis.challenge.model.ProjectGenerationTaskRepository;
+import com.celonis.challenge.repository.ProjectGenerationTaskRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
@@ -19,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class TaskServiceTest {
+class ProjectGenerationTaskServiceTest {
 
     @Mock
     private ProjectGenerationTaskRepository projectGenerationTaskRepository;
@@ -28,7 +26,7 @@ class TaskServiceTest {
     private FileService fileService;
 
     @InjectMocks
-    private TaskService taskService;
+    private ProjectGenerationTaskService projectGenerationTaskService;
 
     @Test
     void listTasks() {
@@ -39,7 +37,7 @@ class TaskServiceTest {
 
         when(projectGenerationTaskRepository.findAll()).thenReturn(expectedTasks);
 
-        List<ProjectGenerationTask> tasks = taskService.listTasks();
+        List<ProjectGenerationTask> tasks = projectGenerationTaskService.listTasks();
         assertEquals(expectedTasks.size(), tasks.size());
     }
 
@@ -53,7 +51,7 @@ class TaskServiceTest {
         task.setCreationDate(inputDate);
         when(projectGenerationTaskRepository.save(task)).thenReturn(task);
 
-        ProjectGenerationTask createdTask = taskService.createTask(task);
+        ProjectGenerationTask createdTask = projectGenerationTaskService.createTask(task);
 
         assertEquals(task, createdTask);
         assertNotEquals(inputId, createdTask.getId());
@@ -70,7 +68,7 @@ class TaskServiceTest {
         task.setCreationDate(new Date());
         when(projectGenerationTaskRepository.findById(inputId)).thenReturn(Optional.of(task));
 
-        ProjectGenerationTask foundTask = taskService.getTask(inputId);
+        ProjectGenerationTask foundTask = projectGenerationTaskService.getTask(inputId);
 
         assertEquals(task, foundTask);
     }
@@ -90,7 +88,7 @@ class TaskServiceTest {
 
         ProjectGenerationTask update = new ProjectGenerationTask();
         update.setName("Updated Name");
-        ProjectGenerationTask updatedTask = taskService.update(inputId, update);
+        ProjectGenerationTask updatedTask = projectGenerationTaskService.update(inputId, update);
 
         assertEquals(existingTask.getId(), updatedTask.getId());
         assertEquals(expectedTask.getName(), updatedTask.getName());
@@ -99,7 +97,7 @@ class TaskServiceTest {
     @Test
     void delete() {
         String inputId = "Input Id";
-        taskService.delete(inputId);
+        projectGenerationTaskService.delete(inputId);
         verify(projectGenerationTaskRepository, times(1)).deleteById(inputId);
     }
 
@@ -111,7 +109,7 @@ class TaskServiceTest {
         task.setName("Test Task");
         task.setCreationDate(new Date());
         when(projectGenerationTaskRepository.findById(inputId)).thenReturn(Optional.of(task));
-        taskService.executeTask(inputId);
+        projectGenerationTaskService.executeTask(inputId);
         verify(fileService, times(1)).storeResult(eq(task), any());
     }
 }

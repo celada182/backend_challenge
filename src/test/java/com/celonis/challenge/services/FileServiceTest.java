@@ -1,7 +1,7 @@
 package com.celonis.challenge.services;
 
 import com.celonis.challenge.model.ProjectGenerationTask;
-import com.celonis.challenge.model.ProjectGenerationTaskRepository;
+import com.celonis.challenge.repository.ProjectGenerationTaskRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

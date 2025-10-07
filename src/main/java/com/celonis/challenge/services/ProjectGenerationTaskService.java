@@ -3,7 +3,7 @@ package com.celonis.challenge.services;
 import com.celonis.challenge.exceptions.InternalException;
 import com.celonis.challenge.exceptions.NotFoundException;
 import com.celonis.challenge.model.ProjectGenerationTask;
-import com.celonis.challenge.model.ProjectGenerationTaskRepository;
+import com.celonis.challenge.repository.ProjectGenerationTaskRepository;
 import org.springframework.stereotype.Service;
 
 import java.net.URL;
@@ -12,14 +12,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TaskService {
+public class ProjectGenerationTaskService {
 
     private final ProjectGenerationTaskRepository projectGenerationTaskRepository;
 
     private final FileService fileService;
-    
-    public TaskService(ProjectGenerationTaskRepository projectGenerationTaskRepository,
-                       FileService fileService) {
+
+    public ProjectGenerationTaskService(ProjectGenerationTaskRepository projectGenerationTaskRepository,
+                                        FileService fileService) {
         this.projectGenerationTaskRepository = projectGenerationTaskRepository;
         this.fileService = fileService;
     }
