@@ -1,0 +1,30 @@
+meta {
+  name: Execute Progress Task
+  type: http
+  seq: 10
+}
+
+post {
+  url: http://localhost:8080/api/tasks/progress/:id/execute
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: 249b5c93-0776-43a9-8b80-60d5810ab7b2
+}
+
+headers {
+  Celonis-Auth: totally_secret
+}
+
+body:json {
+  {
+    "name": "Test task",
+    "creationDate": "2025-10-06"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

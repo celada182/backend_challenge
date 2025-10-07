@@ -4,42 +4,6 @@
   "items": [
     {
       "type": "http",
-      "name": "List Tasks",
-      "filename": "List Tasks.bru",
-      "seq": 1,
-      "settings": {
-        "encodeUrl": true
-      },
-      "tags": [],
-      "request": {
-        "url": "http://localhost:8080/api/tasks/",
-        "method": "GET",
-        "headers": [
-          {
-            "name": "Celonis-Auth",
-            "value": "totally_secret",
-            "enabled": true
-          }
-        ],
-        "params": [],
-        "body": {
-          "mode": "none",
-          "formUrlEncoded": [],
-          "multipartForm": [],
-          "file": []
-        },
-        "script": {},
-        "vars": {},
-        "assertions": [],
-        "tests": "",
-        "docs": "",
-        "auth": {
-          "mode": "inherit"
-        }
-      }
-    },
-    {
-      "type": "http",
       "name": "Create Task",
       "filename": "Create Task.bru",
       "seq": 3,
@@ -48,7 +12,7 @@
       },
       "tags": [],
       "request": {
-        "url": "http://localhost:8080/api/tasks/",
+        "url": "http://localhost:8080/api/tasks/project-generation/",
         "method": "POST",
         "headers": [
           {
@@ -77,93 +41,6 @@
     },
     {
       "type": "http",
-      "name": "Get Task",
-      "filename": "Get Task.bru",
-      "seq": 4,
-      "settings": {
-        "encodeUrl": true
-      },
-      "tags": [],
-      "request": {
-        "url": "http://localhost:8080/api/tasks/:id",
-        "method": "GET",
-        "headers": [
-          {
-            "name": "Celonis-Auth",
-            "value": "totally_secret",
-            "enabled": true
-          }
-        ],
-        "params": [
-          {
-            "name": "id",
-            "value": "253dad2b-3bdd-43af-b908-8b47de17d78a",
-            "type": "path",
-            "enabled": true
-          }
-        ],
-        "body": {
-          "mode": "none",
-          "formUrlEncoded": [],
-          "multipartForm": [],
-          "file": []
-        },
-        "script": {},
-        "vars": {},
-        "assertions": [],
-        "tests": "",
-        "docs": "",
-        "auth": {
-          "mode": "inherit"
-        }
-      }
-    },
-    {
-      "type": "http",
-      "name": "Update Task",
-      "filename": "Update Task.bru",
-      "seq": 5,
-      "settings": {
-        "encodeUrl": true
-      },
-      "tags": [],
-      "request": {
-        "url": "http://localhost:8080/api/tasks/:id",
-        "method": "PUT",
-        "headers": [
-          {
-            "name": "Celonis-Auth",
-            "value": "totally_secret",
-            "enabled": true
-          }
-        ],
-        "params": [
-          {
-            "name": "id",
-            "value": "974bee1b-f5c9-41f2-9a3e-3278abae07b8",
-            "type": "path",
-            "enabled": true
-          }
-        ],
-        "body": {
-          "mode": "json",
-          "json": "{\n  \"name\": \"Updated name\"\n}",
-          "formUrlEncoded": [],
-          "multipartForm": [],
-          "file": []
-        },
-        "script": {},
-        "vars": {},
-        "assertions": [],
-        "tests": "",
-        "docs": "",
-        "auth": {
-          "mode": "inherit"
-        }
-      }
-    },
-    {
-      "type": "http",
       "name": "Delete Task",
       "filename": "Delete Task.bru",
       "seq": 6,
@@ -172,7 +49,7 @@
       },
       "tags": [],
       "request": {
-        "url": "http://localhost:8080/api/tasks/:id",
+        "url": "http://localhost:8080/api/tasks/project-generation/:id",
         "method": "DELETE",
         "headers": [
           {
@@ -216,7 +93,7 @@
       },
       "tags": [],
       "request": {
-        "url": "http://localhost:8080/api/tasks/:id/execute",
+        "url": "http://localhost:8080/api/tasks/project-generation/:id/execute",
         "method": "POST",
         "headers": [
           {
@@ -228,7 +105,7 @@
         "params": [
           {
             "name": "id",
-            "value": "253dad2b-3bdd-43af-b908-8b47de17d78a",
+            "value": "19507b7d-7a03-4cce-8d56-67d49b1245d4",
             "type": "path",
             "enabled": true
           }
@@ -260,7 +137,51 @@
       },
       "tags": [],
       "request": {
-        "url": "http://localhost:8080/api/tasks/:id/result",
+        "url": "http://localhost:8080/api/tasks/project-generation/:id/result",
+        "method": "GET",
+        "headers": [
+          {
+            "name": "Celonis-Auth",
+            "value": "totally_secret",
+            "enabled": true
+          }
+        ],
+        "params": [
+          {
+            "name": "id",
+            "value": "19507b7d-7a03-4cce-8d56-67d49b1245d4",
+            "type": "path",
+            "enabled": true
+          }
+        ],
+        "body": {
+          "mode": "json",
+          "json": "{\n  \"name\": \"Test task\",\n  \"creationDate\": \"2025-10-06\"\n}",
+          "formUrlEncoded": [],
+          "multipartForm": [],
+          "file": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "docs": "",
+        "auth": {
+          "mode": "inherit"
+        }
+      }
+    },
+    {
+      "type": "http",
+      "name": "Get Task",
+      "filename": "Get Task.bru",
+      "seq": 4,
+      "settings": {
+        "encodeUrl": true
+      },
+      "tags": [],
+      "request": {
+        "url": "http://localhost:8080/api/tasks/project-generation/:id",
         "method": "GET",
         "headers": [
           {
@@ -273,6 +194,253 @@
           {
             "name": "id",
             "value": "253dad2b-3bdd-43af-b908-8b47de17d78a",
+            "type": "path",
+            "enabled": true
+          }
+        ],
+        "body": {
+          "mode": "none",
+          "formUrlEncoded": [],
+          "multipartForm": [],
+          "file": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "docs": "",
+        "auth": {
+          "mode": "inherit"
+        }
+      }
+    },
+    {
+      "type": "http",
+      "name": "List Tasks",
+      "filename": "List Tasks.bru",
+      "seq": 1,
+      "settings": {
+        "encodeUrl": true
+      },
+      "tags": [],
+      "request": {
+        "url": "http://localhost:8080/api/tasks/project-generation/",
+        "method": "GET",
+        "headers": [
+          {
+            "name": "Celonis-Auth",
+            "value": "totally_secret",
+            "enabled": true
+          }
+        ],
+        "params": [],
+        "body": {
+          "mode": "none",
+          "formUrlEncoded": [],
+          "multipartForm": [],
+          "file": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "docs": "",
+        "auth": {
+          "mode": "inherit"
+        }
+      }
+    },
+    {
+      "type": "http",
+      "name": "Update Task",
+      "filename": "Update Task.bru",
+      "seq": 5,
+      "settings": {
+        "encodeUrl": true
+      },
+      "tags": [],
+      "request": {
+        "url": "http://localhost:8080/api/tasks/project-generation/:id",
+        "method": "PUT",
+        "headers": [
+          {
+            "name": "Celonis-Auth",
+            "value": "totally_secret",
+            "enabled": true
+          }
+        ],
+        "params": [
+          {
+            "name": "id",
+            "value": "974bee1b-f5c9-41f2-9a3e-3278abae07b8",
+            "type": "path",
+            "enabled": true
+          }
+        ],
+        "body": {
+          "mode": "json",
+          "json": "{\n  \"name\": \"Updated name\"\n}",
+          "formUrlEncoded": [],
+          "multipartForm": [],
+          "file": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "docs": "",
+        "auth": {
+          "mode": "inherit"
+        }
+      }
+    },
+    {
+      "type": "http",
+      "name": "Create Progress Task",
+      "filename": "Create Progress Task.bru",
+      "seq": 9,
+      "settings": {
+        "encodeUrl": true
+      },
+      "tags": [],
+      "request": {
+        "url": "http://localhost:8080/api/tasks/progress/",
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Celonis-Auth",
+            "value": "totally_secret",
+            "enabled": true
+          }
+        ],
+        "params": [],
+        "body": {
+          "mode": "json",
+          "json": "{\n  \"start\": 25,\n  \"end\": 35\n}",
+          "formUrlEncoded": [],
+          "multipartForm": [],
+          "file": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "docs": "",
+        "auth": {
+          "mode": "inherit"
+        }
+      }
+    },
+    {
+      "type": "http",
+      "name": "Execute Progress Task",
+      "filename": "Execute Progress Task.bru",
+      "seq": 10,
+      "settings": {
+        "encodeUrl": true
+      },
+      "tags": [],
+      "request": {
+        "url": "http://localhost:8080/api/tasks/progress/:id/execute",
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Celonis-Auth",
+            "value": "totally_secret",
+            "enabled": true
+          }
+        ],
+        "params": [
+          {
+            "name": "id",
+            "value": "249b5c93-0776-43a9-8b80-60d5810ab7b2",
+            "type": "path",
+            "enabled": true
+          }
+        ],
+        "body": {
+          "mode": "json",
+          "json": "{\n  \"name\": \"Test task\",\n  \"creationDate\": \"2025-10-06\"\n}",
+          "formUrlEncoded": [],
+          "multipartForm": [],
+          "file": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "docs": "",
+        "auth": {
+          "mode": "inherit"
+        }
+      }
+    },
+    {
+      "type": "http",
+      "name": "Get Progress Task",
+      "filename": "Get Progress Task.bru",
+      "seq": 11,
+      "settings": {
+        "encodeUrl": true
+      },
+      "tags": [],
+      "request": {
+        "url": "http://localhost:8080/api/tasks/progress/:id",
+        "method": "GET",
+        "headers": [
+          {
+            "name": "Celonis-Auth",
+            "value": "totally_secret",
+            "enabled": true
+          }
+        ],
+        "params": [
+          {
+            "name": "id",
+            "value": "cc29355a-9d3a-483d-a0c3-15a268bfecc3",
+            "type": "path",
+            "enabled": true
+          }
+        ],
+        "body": {
+          "mode": "none",
+          "formUrlEncoded": [],
+          "multipartForm": [],
+          "file": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "docs": "",
+        "auth": {
+          "mode": "inherit"
+        }
+      }
+    },
+    {
+      "type": "http",
+      "name": "Cancel Progress Task",
+      "filename": "Cancel Progress Task.bru",
+      "seq": 12,
+      "settings": {
+        "encodeUrl": true
+      },
+      "tags": [],
+      "request": {
+        "url": "http://localhost:8080/api/tasks/progress/:id/cancel",
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Celonis-Auth",
+            "value": "totally_secret",
+            "enabled": true
+          }
+        ],
+        "params": [
+          {
+            "name": "id",
+            "value": "a268e894-434a-4c0f-8515-f9c2afc47e2b",
             "type": "path",
             "enabled": true
           }
@@ -304,7 +472,7 @@
       "node_modules",
       ".git"
     ],
-    "size": 0,
-    "filesCount": 0
+    "size": 0.0020160675048828125,
+    "filesCount": 7
   }
 }

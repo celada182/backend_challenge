@@ -1,0 +1,30 @@
+meta {
+  name: Cancel Progress Task
+  type: http
+  seq: 12
+}
+
+post {
+  url: http://localhost:8080/api/tasks/progress/:id/cancel
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: a268e894-434a-4c0f-8515-f9c2afc47e2b
+}
+
+headers {
+  Celonis-Auth: totally_secret
+}
+
+body:json {
+  {
+    "name": "Test task",
+    "creationDate": "2025-10-06"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

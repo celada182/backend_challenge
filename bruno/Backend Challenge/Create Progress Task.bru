@@ -1,0 +1,26 @@
+meta {
+  name: Create Progress Task
+  type: http
+  seq: 9
+}
+
+post {
+  url: http://localhost:8080/api/tasks/progress/
+  body: json
+  auth: inherit
+}
+
+headers {
+  Celonis-Auth: totally_secret
+}
+
+body:json {
+  {
+    "start": 25,
+    "end": 35
+  }
+}
+
+settings {
+  encodeUrl: true
+}

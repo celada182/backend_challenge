@@ -1,0 +1,23 @@
+meta {
+  name: Get Progress Task
+  type: http
+  seq: 11
+}
+
+get {
+  url: http://localhost:8080/api/tasks/progress/:id
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: cc29355a-9d3a-483d-a0c3-15a268bfecc3
+}
+
+headers {
+  Celonis-Auth: totally_secret
+}
+
+settings {
+  encodeUrl: true
+}
