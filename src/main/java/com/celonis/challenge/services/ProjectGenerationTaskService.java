@@ -76,7 +76,7 @@ public class ProjectGenerationTaskService {
     }
 
     @Scheduled(cron = "0 0 * * * ?") // Every day at 00:00
-    private void cleanupTasks() {
+    void cleanupTasks() {
         logger.info("Cleaning up project generation tasks");
         LocalDate localDate = LocalDate.now().minusWeeks(1); // One week old
         Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());

@@ -4,7 +4,6 @@ import com.celonis.challenge.exceptions.NotFoundException;
 import com.celonis.challenge.model.ProgressTask;
 import com.celonis.challenge.repository.ProgressTaskRepository;
 import com.celonis.challenge.scheduler.ProgressTaskScheduler;
-import org.apache.tomcat.jni.Local;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.Optional;
 
@@ -55,7 +53,7 @@ public class ProgressTaskService {
         if (task.isCompleted()) {
             throw new IllegalArgumentException("Task is already completed");
         }
-        Runnable runnable = taskRunnable(task);
+        Runnable runnable = getTaskRunnable(task);
         progressTaskScheduler.scheduleAtFixedRate(runnable, Duration.ofSeconds(1), taskId);
     }
 
@@ -64,7 +62,8 @@ public class ProgressTaskService {
         progressTaskScheduler.cancelScheduledTask(taskId);
     }
 
-    private Runnable taskRunnable(ProgressTask task) {
+    // Package-private for testing
+    Runnable getTaskRunnable(ProgressTask task) {
         return () -> {
             if (!task.isCompleted()) {
                 logger.info("Running task {}", task.getId());
@@ -85,7 +84,7 @@ public class ProgressTaskService {
     }
 
     @Scheduled(cron = "0 0 * * * ?") // Every day at 00:00
-    private void cleanupTasks() {
+    void cleanupTasks() {
         logger.info("Cleaning up progress tasks");
         LocalDate localDate = LocalDate.now().minusWeeks(1); // One week old
         Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
