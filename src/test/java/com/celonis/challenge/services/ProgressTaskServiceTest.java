@@ -1,6 +1,7 @@
 package com.celonis.challenge.services;
 
 import com.celonis.challenge.exceptions.NotFoundException;
+import com.celonis.challenge.exceptions.TaskCompletedException;
 import com.celonis.challenge.model.ProgressTask;
 import com.celonis.challenge.repository.ProgressTaskRepository;
 import com.celonis.challenge.scheduler.ProgressTaskScheduler;
@@ -114,7 +115,7 @@ class ProgressTaskServiceTest {
         when(progressTaskRepository.findById("test-task-id")).thenReturn(Optional.of(testTask));
 
         // When & Then
-        assertThrows(IllegalArgumentException.class, () -> progressTaskService.executeTask("test-task-id"));
+        assertThrows(TaskCompletedException.class, () -> progressTaskService.executeTask("test-task-id"));
     }
 
     @Test

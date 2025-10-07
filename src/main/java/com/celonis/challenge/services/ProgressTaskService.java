@@ -1,6 +1,7 @@
 package com.celonis.challenge.services;
 
 import com.celonis.challenge.exceptions.NotFoundException;
+import com.celonis.challenge.exceptions.TaskCompletedException;
 import com.celonis.challenge.model.ProgressTask;
 import com.celonis.challenge.repository.ProgressTaskRepository;
 import com.celonis.challenge.scheduler.ProgressTaskScheduler;
@@ -51,7 +52,7 @@ public class ProgressTaskService {
         logger.info("Executing progress task: {}", taskId);
         ProgressTask task = getTask(taskId);
         if (task.isCompleted()) {
-            throw new IllegalArgumentException("Task is already completed");
+            throw new TaskCompletedException("Task " + taskId + " is already completed");
         }
         Runnable runnable = getTaskRunnable(task);
         progressTaskScheduler.scheduleAtFixedRate(runnable, Duration.ofSeconds(1), taskId);
@@ -83,7 +84,8 @@ public class ProgressTaskService {
         };
     }
 
-    @Scheduled(cron = "0 0 * * * ?") // Every day at 00:00
+    @Scheduled(cron = "0 0 * * * ?")
+        // Every day at 00:00
     void cleanupTasks() {
         logger.info("Cleaning up progress tasks");
         LocalDate localDate = LocalDate.now().minusWeeks(1); // One week old
