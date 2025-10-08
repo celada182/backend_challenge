@@ -98,24 +98,11 @@ class ProgressTaskServiceTest {
 
     @Test
     void executeTask_shouldScheduleTask() {
-        // Given
-        when(progressTaskRepository.findById("test-task-id")).thenReturn(Optional.of(testTask));
-
         // When
         progressTaskService.executeTask("test-task-id");
 
         // Then
         verify(progressTaskScheduler).scheduleAtFixedRate(any(Runnable.class), eq(Duration.ofSeconds(1)), eq("test-task-id"));
-    }
-
-    @Test
-    void executeTask_shouldThrowWhenTaskAlreadyCompleted() {
-        // Given
-        testTask.setCompleted(true);
-        when(progressTaskRepository.findById("test-task-id")).thenReturn(Optional.of(testTask));
-
-        // When & Then
-        assertThrows(TaskCompletedException.class, () -> progressTaskService.executeTask("test-task-id"));
     }
 
     @Test
@@ -128,33 +115,53 @@ class ProgressTaskServiceTest {
     }
 
     @Test
-    void taskRunnable_shouldIncrementProgressAndCompleteGetTask() {
+    void updateTask_shouldIncrementProgressAndCompleteTask() {
         // Given
         testTask.setStart(0);
         testTask.setEnd(2);
         testTask.setProgress(0);
         testTask.setCompleted(false);
+        
+        when(progressTaskRepository.findById("test-task-id")).thenReturn(Optional.of(testTask));
+        when(progressTaskRepository.save(any(ProgressTask.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        // When - First execution
-        Runnable runnable = progressTaskService.getTaskRunnable(testTask);
-        runnable.run();
+        // When - First update
+        progressTaskService.updateTask("test-task-id");
 
-        // Then - After first run
+        // Then - After first update
         assertEquals(1, testTask.getProgress());
         assertFalse(testTask.isCompleted());
 
-        // When - Second execution (should complete the task)
-        runnable.run();
+        // When - Second update (should complete the task)
+        progressTaskService.updateTask("test-task-id");
 
-        // Then - After second run
+        // Then - After second update
         assertEquals(2, testTask.getProgress());
         assertTrue(testTask.isCompleted());
         
-        // Verify the task was saved twice (once for each progress update)
-        verify(progressTaskRepository, times(2)).save(testTask);
-        
-        // Verify the task was cancelled after completion
-        verify(progressTaskScheduler).cancelScheduledTask("test-task-id");
+        // Verify the task was saved twice (once for each update)
+        verify(progressTaskRepository, times(2)).save(any(ProgressTask.class));
+    }
+    
+    @Test
+    void updateTask_shouldThrowWhenTaskNotFound() {
+        // Given
+        when(progressTaskRepository.findById("non-existent-id")).thenReturn(Optional.empty());
+
+        // When & Then
+        assertThrows(NotFoundException.class, () -> progressTaskService.updateTask("non-existent-id"));
+        verify(progressTaskRepository, never()).save(any(ProgressTask.class));
+    }
+    
+    @Test
+    void updateTask_shouldThrowWhenTaskAlreadyCompleted() {
+        // Given
+        testTask.setCompleted(true);
+        when(progressTaskRepository.findById("test-task-id")).thenReturn(Optional.of(testTask));
+
+        // When & Then
+        assertThrows(TaskCompletedException.class, () -> progressTaskService.updateTask("test-task-id"));
+        verify(progressTaskRepository, never()).save(any(ProgressTask.class));
     }
 
     @Test

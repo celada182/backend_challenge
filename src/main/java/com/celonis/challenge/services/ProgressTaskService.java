@@ -7,10 +7,10 @@ import com.celonis.challenge.repository.ProgressTaskRepository;
 import com.celonis.challenge.scheduler.ProgressTaskScheduler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -26,8 +26,7 @@ public class ProgressTaskService {
 
     private final ProgressTaskScheduler progressTaskScheduler;
 
-    public ProgressTaskService(ProgressTaskRepository progressTaskRepository,
-                               ProgressTaskScheduler progressTaskScheduler) {
+    public ProgressTaskService(ProgressTaskRepository progressTaskRepository, ProgressTaskScheduler progressTaskScheduler) {
         this.progressTaskRepository = progressTaskRepository;
         this.progressTaskScheduler = progressTaskScheduler;
     }
@@ -51,12 +50,7 @@ public class ProgressTaskService {
 
     public void executeTask(String taskId) {
         logger.info("Executing progress task: {}", taskId);
-        ProgressTask task = getTask(taskId);
-        if (task.isCompleted()) {
-            throw new TaskCompletedException("Task " + taskId + " is already completed");
-        }
-        Runnable runnable = getTaskRunnable(task);
-        progressTaskScheduler.scheduleAtFixedRate(runnable, Duration.ofSeconds(1), taskId);
+        progressTaskScheduler.scheduleAtFixedRate(() -> updateTask(taskId), Duration.ofSeconds(1), taskId);
     }
 
     public void cancelTask(String taskId) {
@@ -64,24 +58,33 @@ public class ProgressTaskService {
         progressTaskScheduler.cancelScheduledTask(taskId);
     }
 
-    Runnable getTaskRunnable(ProgressTask task) {
-        return () -> {
-            if (!task.isCompleted()) {
-                logger.info("Running task {}", task.getId());
-                task.setProgress(task.getProgress() + 1);
-                logger.info("Task {} progress: {}", task.getId(), task.getProgress());
-                if (task.getProgress() >= task.getEnd()) {
-                    logger.info("Task {} completed", task.getId());
-                    task.setCompleted(true);
-                }
-            }
-            progressTaskRepository.save(task);
-            logger.info("Task {} saved", task.getId());
-            if (task.isCompleted()) {
-                progressTaskScheduler.cancelScheduledTask(task.getId());
-                logger.info("Task {} cancelled", task.getId());
-            }
-        };
+    @Transactional
+    void updateTask(String taskId) {
+        ProgressTask task = getTask(taskId);
+        if (task.isCompleted()) {
+            throw new TaskCompletedException("Task " + taskId + " is already completed");
+        }
+        logger.info("Running task {}", task.getId());
+        task.setProgress(task.getProgress() + 1);
+        logger.info("Task {} progress: {}", task.getId(), task.getProgress());
+        if (task.getProgress() >= task.getEnd()) {
+            logger.info("Task {} completed", task.getId());
+            task.setCompleted(true);
+        }
+        // Test locking
+//        if (task.getProgress() % 10 == 0) {
+//            try {
+//                Thread.sleep(10000);
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+        progressTaskRepository.save(task);
+        logger.info("Task {} saved", task.getId());
+        if (task.isCompleted()) {
+            progressTaskScheduler.cancelScheduledTask(task.getId());
+            logger.info("Task {} cancelled", task.getId());
+        }
     }
 
     @Scheduled(cron = "0 0 * * * ?")
