@@ -7,6 +7,7 @@ import com.celonis.challenge.repository.ProgressTaskRepository;
 import com.celonis.challenge.scheduler.ProgressTaskScheduler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -63,7 +64,6 @@ public class ProgressTaskService {
         progressTaskScheduler.cancelScheduledTask(taskId);
     }
 
-    // Package-private for testing
     Runnable getTaskRunnable(ProgressTask task) {
         return () -> {
             if (!task.isCompleted()) {

@@ -13,6 +13,12 @@ public class ProgressTaskScheduler extends ThreadPoolTaskScheduler {
 
     private final Map<String, ScheduledFuture<?>> scheduledTasks = new HashMap<>();
 
+    public ProgressTaskScheduler() {
+        super();
+        setThreadNamePrefix("ProgressTaskScheduler-");
+        setPoolSize(10);
+    }
+
     public void scheduleAtFixedRate(Runnable task, Duration period, String id) {
         ScheduledFuture<?> future = super.scheduleAtFixedRate(task, period);
         scheduledTasks.put(id, future);
