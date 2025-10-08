@@ -4,6 +4,87 @@
   "items": [
     {
       "type": "http",
+      "name": "Cancel Progress Task",
+      "filename": "Cancel Progress Task.bru",
+      "seq": 12,
+      "settings": {
+        "encodeUrl": true
+      },
+      "tags": [],
+      "request": {
+        "url": "http://localhost:8080/api/tasks/progress/:id/cancel",
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Celonis-Auth",
+            "value": "totally_secret",
+            "enabled": true
+          }
+        ],
+        "params": [
+          {
+            "name": "id",
+            "value": "ecb8bb84-5e11-4fbf-89db-50177780d03a",
+            "type": "path",
+            "enabled": true
+          }
+        ],
+        "body": {
+          "mode": "json",
+          "json": "{\n  \"name\": \"Test task\",\n  \"creationDate\": \"2025-10-06\"\n}",
+          "formUrlEncoded": [],
+          "multipartForm": [],
+          "file": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "docs": "",
+        "auth": {
+          "mode": "inherit"
+        }
+      }
+    },
+    {
+      "type": "http",
+      "name": "Create Progress Task",
+      "filename": "Create Progress Task.bru",
+      "seq": 9,
+      "settings": {
+        "encodeUrl": true
+      },
+      "tags": [],
+      "request": {
+        "url": "http://localhost:8080/api/tasks/progress/",
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Celonis-Auth",
+            "value": "totally_secret",
+            "enabled": true
+          }
+        ],
+        "params": [],
+        "body": {
+          "mode": "json",
+          "json": "{\n  \"start\": 20,\n  \"end\": 2000\n}",
+          "formUrlEncoded": [],
+          "multipartForm": [],
+          "file": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "docs": "",
+        "auth": {
+          "mode": "inherit"
+        }
+      }
+    },
+    {
+      "type": "http",
       "name": "Create Task",
       "filename": "Create Task.bru",
       "seq": 3,
@@ -85,6 +166,50 @@
     },
     {
       "type": "http",
+      "name": "Execute Progress Task",
+      "filename": "Execute Progress Task.bru",
+      "seq": 10,
+      "settings": {
+        "encodeUrl": true
+      },
+      "tags": [],
+      "request": {
+        "url": "http://localhost:8080/api/tasks/progress/:id/execute",
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Celonis-Auth",
+            "value": "totally_secret",
+            "enabled": true
+          }
+        ],
+        "params": [
+          {
+            "name": "id",
+            "value": "172a84c0-feb1-48b0-bef5-51f73d6406c4",
+            "type": "path",
+            "enabled": true
+          }
+        ],
+        "body": {
+          "mode": "json",
+          "json": "{\n  \"name\": \"Test task\",\n  \"creationDate\": \"2025-10-06\"\n}",
+          "formUrlEncoded": [],
+          "multipartForm": [],
+          "file": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "docs": "",
+        "auth": {
+          "mode": "inherit"
+        }
+      }
+    },
+    {
+      "type": "http",
       "name": "Execute Task",
       "filename": "Execute Task.bru",
       "seq": 7,
@@ -105,7 +230,7 @@
         "params": [
           {
             "name": "id",
-            "value": "19507b7d-7a03-4cce-8d56-67d49b1245d4",
+            "value": "46fe7b72-3884-42a1-9526-c08cc0ae8bd3",
             "type": "path",
             "enabled": true
           }
@@ -113,6 +238,49 @@
         "body": {
           "mode": "json",
           "json": "{\n  \"name\": \"Test task\",\n  \"creationDate\": \"2025-10-06\"\n}",
+          "formUrlEncoded": [],
+          "multipartForm": [],
+          "file": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "docs": "",
+        "auth": {
+          "mode": "inherit"
+        }
+      }
+    },
+    {
+      "type": "http",
+      "name": "Get Progress Task",
+      "filename": "Get Progress Task.bru",
+      "seq": 11,
+      "settings": {
+        "encodeUrl": true
+      },
+      "tags": [],
+      "request": {
+        "url": "http://localhost:8080/api/tasks/progress/:id",
+        "method": "GET",
+        "headers": [
+          {
+            "name": "Celonis-Auth",
+            "value": "totally_secret",
+            "enabled": true
+          }
+        ],
+        "params": [
+          {
+            "name": "id",
+            "value": "0504b6a6-36d9-4872-ba8e-fa84b16d9744",
+            "type": "path",
+            "enabled": true
+          }
+        ],
+        "body": {
+          "mode": "none",
           "formUrlEncoded": [],
           "multipartForm": [],
           "file": []
@@ -149,7 +317,7 @@
         "params": [
           {
             "name": "id",
-            "value": "19507b7d-7a03-4cce-8d56-67d49b1245d4",
+            "value": "46fe7b72-3884-42a1-9526-c08cc0ae8bd3",
             "type": "path",
             "enabled": true
           }
@@ -293,174 +461,6 @@
           "mode": "inherit"
         }
       }
-    },
-    {
-      "type": "http",
-      "name": "Create Progress Task",
-      "filename": "Create Progress Task.bru",
-      "seq": 9,
-      "settings": {
-        "encodeUrl": true
-      },
-      "tags": [],
-      "request": {
-        "url": "http://localhost:8080/api/tasks/progress/",
-        "method": "POST",
-        "headers": [
-          {
-            "name": "Celonis-Auth",
-            "value": "totally_secret",
-            "enabled": true
-          }
-        ],
-        "params": [],
-        "body": {
-          "mode": "json",
-          "json": "{\n  \"start\": 25,\n  \"end\": 100\n}",
-          "formUrlEncoded": [],
-          "multipartForm": [],
-          "file": []
-        },
-        "script": {},
-        "vars": {},
-        "assertions": [],
-        "tests": "",
-        "docs": "",
-        "auth": {
-          "mode": "inherit"
-        }
-      }
-    },
-    {
-      "type": "http",
-      "name": "Execute Progress Task",
-      "filename": "Execute Progress Task.bru",
-      "seq": 10,
-      "settings": {
-        "encodeUrl": true
-      },
-      "tags": [],
-      "request": {
-        "url": "http://localhost:8080/api/tasks/progress/:id/execute",
-        "method": "POST",
-        "headers": [
-          {
-            "name": "Celonis-Auth",
-            "value": "totally_secret",
-            "enabled": true
-          }
-        ],
-        "params": [
-          {
-            "name": "id",
-            "value": "ebb80cdc-4790-4294-ae0f-3fd1a632aec3",
-            "type": "path",
-            "enabled": true
-          }
-        ],
-        "body": {
-          "mode": "json",
-          "json": "{\n  \"name\": \"Test task\",\n  \"creationDate\": \"2025-10-06\"\n}",
-          "formUrlEncoded": [],
-          "multipartForm": [],
-          "file": []
-        },
-        "script": {},
-        "vars": {},
-        "assertions": [],
-        "tests": "",
-        "docs": "",
-        "auth": {
-          "mode": "inherit"
-        }
-      }
-    },
-    {
-      "type": "http",
-      "name": "Get Progress Task",
-      "filename": "Get Progress Task.bru",
-      "seq": 11,
-      "settings": {
-        "encodeUrl": true
-      },
-      "tags": [],
-      "request": {
-        "url": "http://localhost:8080/api/tasks/progress/:id",
-        "method": "GET",
-        "headers": [
-          {
-            "name": "Celonis-Auth",
-            "value": "totally_secret",
-            "enabled": true
-          }
-        ],
-        "params": [
-          {
-            "name": "id",
-            "value": "acb48ad8-c620-4e0a-bfce-24225fc35788",
-            "type": "path",
-            "enabled": true
-          }
-        ],
-        "body": {
-          "mode": "none",
-          "formUrlEncoded": [],
-          "multipartForm": [],
-          "file": []
-        },
-        "script": {},
-        "vars": {},
-        "assertions": [],
-        "tests": "",
-        "docs": "",
-        "auth": {
-          "mode": "inherit"
-        }
-      }
-    },
-    {
-      "type": "http",
-      "name": "Cancel Progress Task",
-      "filename": "Cancel Progress Task.bru",
-      "seq": 12,
-      "settings": {
-        "encodeUrl": true
-      },
-      "tags": [],
-      "request": {
-        "url": "http://localhost:8080/api/tasks/progress/:id/cancel",
-        "method": "POST",
-        "headers": [
-          {
-            "name": "Celonis-Auth",
-            "value": "totally_secret",
-            "enabled": true
-          }
-        ],
-        "params": [
-          {
-            "name": "id",
-            "value": "ebb80cdc-4790-4294-ae0f-3fd1a632aec3",
-            "type": "path",
-            "enabled": true
-          }
-        ],
-        "body": {
-          "mode": "json",
-          "json": "{\n  \"name\": \"Test task\",\n  \"creationDate\": \"2025-10-06\"\n}",
-          "formUrlEncoded": [],
-          "multipartForm": [],
-          "file": []
-        },
-        "script": {},
-        "vars": {},
-        "assertions": [],
-        "tests": "",
-        "docs": "",
-        "auth": {
-          "mode": "inherit"
-        }
-      }
     }
   ],
   "environments": [],
@@ -472,7 +472,7 @@
       "node_modules",
       ".git"
     ],
-    "size": 0.0020160675048828125,
-    "filesCount": 7
+    "size": 0.003398895263671875,
+    "filesCount": 11
   }
 }
